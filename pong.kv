@@ -29,17 +29,20 @@
 
     canvas:
         Rectangle:
+            id: middleLine
             source: 'score.jpg'
             pos: self.center_x - 5, 0
             size: 10, self.height
 
     Label:
+        id: score1
         font_size: 70
         center_x: root.width / 4
         top: root.top - 50
         text: str(root.player1.score)
 
     Label:
+        id: score2
         font_size: 70
         center_x: root.width * 3 / 4
         top: root.top - 50
@@ -64,11 +67,27 @@
         text: 'Exit'
         on_press: app.stop()
         pos: 52, 1
-        size: 30, 30
+        size: 35, 30
 
     Button:
         id: btnPause
         text: 'Pause'
         on_press:
+            root.remove_widget(player_right)
+            root.remove_widget(player_left)
+            root.remove_widget(score1)
+            root.remove_widget(score2)
         pos: 1, 1
         size: 50, 30
+
+    Button:
+        id: btnResume
+        text: 'Resume'
+        on_press:
+            root.add_widget(player_right)
+            root.add_widget(player_left)
+            root.add_widget(score1)
+            root.add_widget(score2)
+        pos: 88, 1
+        size: 58, 30
+
