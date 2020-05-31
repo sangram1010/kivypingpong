@@ -29,7 +29,6 @@
 
     canvas:
         Rectangle:
-            id: middleLine
             source: 'score.jpg'
             pos: self.center_x - 5, 0
             size: 10, self.height
@@ -91,3 +90,9 @@
         pos: 88, 1
         size: 58, 30
 
+    Label:
+        id: winner
+        font_size: 100
+        center_x: root.width /2
+        top: root.top - 180
+        text:

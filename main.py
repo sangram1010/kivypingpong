@@ -1,7 +1,4 @@
 from kivy.app import App
-from kivy.core.text import Label
-from kivy.uix.button import Button
-from kivy.uix.popup import Popup
 from kivy.uix.widget import Widget
 from kivy.properties import (
     NumericProperty, ReferenceListProperty, ObjectProperty
@@ -67,23 +64,29 @@ class PongGame(Widget):
             self.player1.score += 1
             self.serve_ball(vel=(-4, 0))
 
+        if self.player1.score == 2:
+            self.ids.winner.text = 'PLAYER 1 WINS'
+            self.ids.winner.color = [207, 0, 15, 1]
+#           self.clear_widgets()
+            self.remove_widget(self.ids.score1)
+            self.remove_widget(self.ids.score2)
+            self.remove_widget(self.ids.player_left)
+            self.remove_widget(self.ids.player_right)
+
+        if self.player2.score == 2:
+            self.ids.winner.text = 'PLAYER 2 WINS'
+            self.ids.winner.color = [207, 0, 15, 1]
+            self.remove_widget(self.ids.score1)
+            self.remove_widget(self.ids.score2)
+            self.remove_widget(self.ids.player_left)
+            self.remove_widget(self.ids.player_right)
+            self.remove_widget(self.ids.pong_ball)
+
     def on_touch_move(self, touch):
         if touch.x < self.width / 3:
             self.player1.center_y = touch.y
         if touch.x > self.width - self.width / 3:
             self.player2.center_y = touch.y
-
-    def game_over(self):
-        if self.player1.score == 10:
-            popup = Popup(title='Test popup',
-                          content=Label(text='Player 1 WIN'),
-                          size_hint=(None, None), size=(400, 400))
-            popup.open()
-        if self.player2.score == 10:
-            popup = Popup(title='Test popup',
-                          content=Label(text='Player 2 WIN'),
-                          size_hint=(None, None), size=(400, 400))
-            popup.open()
 
 
 class PongApp(App):
@@ -93,7 +96,6 @@ class PongApp(App):
         game = PongGame()
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 100.0)
-        game.game_over()
         return game
 
 
